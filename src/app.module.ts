@@ -13,8 +13,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
             url: process.env.DATABASE_URL,
             type: 'postgres',
             entities: ['dist/**/*.entity{.ts,.js}'],
-            synchronize: false,
+            synchronize: true,
             autoLoadEntities: true,
+            ssl: {
+              rejectUnauthorized: false,
+            },
           }
         : {
             type: 'sqlite',

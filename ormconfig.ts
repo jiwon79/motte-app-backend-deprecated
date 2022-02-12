@@ -10,7 +10,7 @@ const typeormConfig: ConnectionOptions = process.env.NODE_ENV
         rejectUnauthorized: false,
       },
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      migrations: [__dirname + '/migrations/**/*.{ts,js}'],
+      migrations: [__dirname + '/src/migrations/*.{ts,js}'],
       migrationsTableName: 'migrations',
       cli: {
         entitiesDir: __dirname + '/**/*.entity.{js,ts}',

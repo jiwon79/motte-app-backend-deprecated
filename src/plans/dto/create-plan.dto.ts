@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from 'class-validator/types';
+import { IsOptional, IsString } from 'class-validator';
 
 export class CreatePlanDto {
   @IsString()

@@ -1,19 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { Plan } from './plan.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreatePlanDto } from './dto/create-plan.dto';
+import { Repository } from 'typeorm';
+import { Plan } from './plan.entity';
 
 @Injectable()
 export class PlansService {
-  private plans: Plan[] = [];
-
-  getAll(): Plan[] {
-    return this.plans;
+  constructor(
+    @InjectRepository(Plan) private planRepository: Repository<Plan>,
+  ) {
+    this.planRepository = planRepository;
   }
 
-  create(planData: CreatePlanDto) {
-    this.plans.push({
-      id: this.plans.length + 1,
-      ...planData,
-    });
+  getAll(): Promise<Plan[]> {
+    return this.planRepository.find();
   }
 }

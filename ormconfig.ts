@@ -3,7 +3,6 @@ import { ConnectionOptions } from 'typeorm';
 const typeormConfig: ConnectionOptions = process.env.NODE_ENV
   ? {
       url: process.env.DATABASE_URL,
-      name: 'production',
       type: 'postgres',
       synchronize: false,
       ssl: {
@@ -18,7 +17,6 @@ const typeormConfig: ConnectionOptions = process.env.NODE_ENV
       },
     }
   : {
-      name: 'local',
       type: 'sqlite',
       database: 'db',
       synchronize: false,

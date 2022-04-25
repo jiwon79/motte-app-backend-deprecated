@@ -11,16 +11,8 @@ export class PlansService {
   ) {
     this.planRepository = planRepository;
   }
-  private plans: Plan[] = [];
 
-  getAll(): Plan[] {
-    return this.plans;
-  }
-
-  create(planData: CreatePlanDto) {
-    this.plans.push({
-      id: this.plans.length + 1,
-      ...planData,
-    });
+  getAll(): Promise<Plan[]> {
+    return this.planRepository.find();
   }
 }

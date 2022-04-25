@@ -8,12 +8,12 @@ export class PlansController {
   constructor(private readonly plansService: PlansService) {}
 
   @Get()
-  getAllPlans(): Plan[] {
-    return this.plansService.getAll();
-  }
-
-  @Post()
-  create(@Body() planData: CreatePlanDto) {
-    return this.plansService.create(planData);
+  async getAllPlans(): Promise<Plan[]> {
+    const planList = await this.plansService.getAll();
+    return Object.assign({
+      data: planList,
+      statusCode: 200,
+      statusMsg: '성공',
+    });
   }
 }

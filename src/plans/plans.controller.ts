@@ -16,4 +16,14 @@ export class PlansController {
       statusMsg: '성공',
     });
   }
+
+  @Post()
+  async create(@Body() planData: CreatePlanDto): Promise<string[]> {
+    await this.plansService.create(planData);
+    return Object.assign({
+      data: { ...planData },
+      statusCode: 201,
+      statusMsg: 'create success',
+    });
+  }
 }

@@ -5,20 +5,20 @@ export class CreatePlanDto {
   readonly date: string;
 
   @IsString()
-  title: string;
+  readonly title: string;
 
   @IsString()
-  tag: string;
-
-  @IsOptional()
-  @IsString()
-  location: string;
+  readonly tag: string;
 
   @IsOptional()
   @IsString()
-  channel: string;
+  readonly location: string;
 
   @IsOptional()
   @IsString()
-  content: string;
+  readonly channel: string;
+
+  @IsOptional()
+  @IsString()
+  readonly content: string;
 }

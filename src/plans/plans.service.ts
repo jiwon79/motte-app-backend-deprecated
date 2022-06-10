@@ -15,4 +15,9 @@ export class PlansService {
   getAll(): Promise<Plan[]> {
     return this.planRepository.find();
   }
+
+  async create(planData: CreatePlanDto): Promise<void> {
+    const newPlan = this.planRepository.create(planData);
+    await this.planRepository.save(newPlan);
+  }
 }

@@ -14,12 +14,12 @@ export class Plan {
   @Column()
   tag: string;
 
-  @Column()
+  @Column({ nullable: true })
   location: string;
 
-  @Column()
+  @Column({ nullable: true })
   channel: string;
 
-  @Column()
+  @Column({ nullable: true })
   content: string;
 }

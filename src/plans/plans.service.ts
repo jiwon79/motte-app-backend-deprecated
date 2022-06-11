@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreatePlanDto } from './dto/create-plan.dto';
 import { Repository } from 'typeorm';
 import { Plan } from './plan.entity';
+import { CreatePlanDto } from './dto/create-plan.dto';
+import { UpdatePlanDto } from './dto/update-plan.dto';
 
 @Injectable()
 export class PlansService {
@@ -14,6 +15,10 @@ export class PlansService {
 
   getAll(): Promise<Plan[]> {
     return this.planRepository.find();
+  }
+
+  getOne(id: number): Promise<Plan> {
+    return this.planRepository.findOne(id);
   }
 
   async create(planData: CreatePlanDto): Promise<void> {

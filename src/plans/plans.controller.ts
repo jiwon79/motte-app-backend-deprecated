@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Param } from "@nestjs/common";
+import { Controller, Get, Post, Body, Put, Param } from '@nestjs/common';
 import { PlansService } from './plans.service';
 import { Plan } from './plan.entity';
 import { CreatePlanDto } from './dto/create-plan.dto';
@@ -30,11 +30,25 @@ export class PlansController {
 
   @Post()
   async create(@Body() planData: CreatePlanDto): Promise<string[]> {
+    console.log(planData);
     await this.plansService.create(planData);
     return Object.assign({
       data: { ...planData },
       statusCode: 201,
       statusMsg: 'create success',
+    });
+  }
+
+  @Put('/:id')
+  async update(
+    @Body() planData: UpdatePlanDto,
+    @Param() id: number,
+  ): Promise<string[]> {
+    await this.plansService.update(id, planData);
+    return Object.assign({
+      data: { ...planData },
+      statusCode: 200,
+      statusMsg: 'update success',
     });
   }
 }

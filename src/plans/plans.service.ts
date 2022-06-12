@@ -25,4 +25,8 @@ export class PlansService {
     const newPlan = this.planRepository.create(planData);
     await this.planRepository.save(newPlan);
   }
+
+  async update(id: number, planData: UpdatePlanDto): Promise<void> {
+    await this.planRepository.update(id, planData);
+  }
 }

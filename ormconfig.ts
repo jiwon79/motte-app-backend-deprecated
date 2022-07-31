@@ -17,8 +17,11 @@ const typeormConfig: ConnectionOptions = process.env.NODE_ENV
       },
     }
   : {
-      type: 'sqlite',
-      database: 'db',
+      type: 'postgres',
+      database: 'github-actions-motte-app',
+      username: 'postgres',
+      password: 'postgres',
+      port: 5432,
       synchronize: false,
       logging: true,
       entities: [__dirname + '/**/*.entity.{ts,js}'],

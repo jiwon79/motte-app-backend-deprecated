@@ -13,20 +13,24 @@ export class PlansService {
     this.planRepository = planRepository;
   }
 
-  getAll(): Promise<Plan[]> {
-    return this.planRepository.find();
+  async findAll(): Promise<Plan[]> {
+    return await this.planRepository.find();
   }
 
-  getOne(id: number): Promise<Plan> {
-    return this.planRepository.findOne(id);
+  async findOne(id: number): Promise<Plan> {
+    return await this.planRepository.findOne(id);
   }
 
-  async create(planData: CreatePlanDto): Promise<void> {
-    const newPlan = this.planRepository.create(planData);
-    await this.planRepository.save(newPlan);
+  async create(planData: CreatePlanDto): Promise<Plan> {
+    // const newPlan = this.planRepository.create(planData);
+    return await this.planRepository.save(planData);
   }
 
   async update(id: number, planData: UpdatePlanDto): Promise<void> {
     await this.planRepository.update(id, planData);
+  }
+
+  async remove(id: number) {
+    await this.planRepository.softDelete(id);
   }
 }

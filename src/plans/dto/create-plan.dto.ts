@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreatePlanDto {
   @IsNotEmpty()
@@ -13,12 +13,15 @@ export class CreatePlanDto {
   @IsString()
   readonly tag: string;
 
+  @IsOptional()
   @IsString()
   readonly location?: string;
 
+  @IsOptional()
   @IsString()
   readonly channel?: string;
 
+  @IsOptional()
   @IsString()
   readonly content?: string;
 }

@@ -72,4 +72,29 @@ describe('Plans Service', () => {
       expect(result.tag).toEqual('[]');
     });
   });
+
+  describe('findAll()', () => {
+    it('should call repository find all', async () => {
+      const findSpy = jest.spyOn(planRepository, 'find');
+
+      await service.findAll();
+
+      expect(findSpy).toHaveBeenCalled();
+    });
+
+    it('should throw if repository find all trows', async () => {
+      jest.spyOn(planRepository, 'find').mockRejectedValueOnce(new Error());
+
+      await expect(service.findAll()).rejects.toThrow(new Error());
+    });
+
+    it('should return plans on success', async () => {
+      const mockResponse = [mockPlan];
+
+      jest.spyOn(planRepository, 'find').mockResolvedValue(mockResponse);
+      const response = await service.findAll();
+
+      expect(response).toEqual(mockResponse);
+    });
+  });
 });

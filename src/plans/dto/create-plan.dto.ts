@@ -1,24 +1,24 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreatePlanDto {
+  @IsNotEmpty()
   @IsString()
   readonly date: string;
 
+  @IsNotEmpty()
   @IsString()
   readonly title: string;
 
+  @IsNotEmpty()
   @IsString()
   readonly tag: string;
 
-  @IsOptional()
   @IsString()
-  readonly location: string;
+  readonly location?: string;
 
-  @IsOptional()
   @IsString()
-  readonly channel: string;
+  readonly channel?: string;
 
-  @IsOptional()
   @IsString()
-  readonly content: string;
+  readonly content?: string;
 }

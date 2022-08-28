@@ -1,21 +1,29 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PlansService } from './plans.service';
-import { Plan } from './plan.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { PlansService } from './plans.service';
+import { Plan } from './plan.entity';
+import { UpdatePlanDto } from './dto/update-plan.dto';
+import { CreatePlanDto } from './dto/create-plan.dto';
 
 const mockPlanRepository = () => ({
   save: jest.fn(),
   create: jest.fn(),
   find: jest.fn(),
   findOne: jest.fn(),
+  update: jest.fn(),
   softDelete: jest.fn(),
 });
 
-const mockCreateDto = {
+const mockCreateDto: CreatePlanDto = {
   date: '2022-01-01',
   title: 'title',
   tag: '[]',
+};
+
+const mockUpdateDto: UpdatePlanDto = {
+  date: '2022-01-02',
+  title: 'new title',
 };
 
 const mockPlan = {
@@ -119,6 +127,24 @@ describe('Plans Service', () => {
       const response = await service.findOne(10);
 
       expect(response).toEqual(mockPlan);
+    });
+  });
+
+  describe('update()', () => {
+    it('should call repository update with correct value', async () => {
+      const updateSpy = jest.spyOn(planRepository, 'update');
+
+      await service.update(10, mockUpdateDto);
+
+      expect(updateSpy).toBeCalledWith(10, mockUpdateDto);
+    });
+
+    it('should throw if repository throws', async () => {
+      jest.spyOn(planRepository, 'update').mockRejectedValueOnce(new Error());
+
+      await expect(service.update(10, mockUpdateDto)).rejects.toThrow(
+        new Error(),
+      );
     });
   });
 });

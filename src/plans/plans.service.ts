@@ -22,15 +22,15 @@ export class PlansService {
   }
 
   async create(planData: CreatePlanDto): Promise<Plan> {
-    // const newPlan = this.planRepository.create(planData);
-    return await this.planRepository.save(planData);
+    const newPlan = this.planRepository.create(planData);
+    return await this.planRepository.save(newPlan);
   }
 
   async update(id: number, planData: UpdatePlanDto): Promise<void> {
     await this.planRepository.update(id, planData);
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<void> {
     await this.planRepository.softDelete(id);
   }
 }

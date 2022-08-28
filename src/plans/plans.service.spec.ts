@@ -97,4 +97,28 @@ describe('Plans Service', () => {
       expect(response).toEqual(mockResponse);
     });
   });
+
+  describe('findOne()', () => {
+    it('should call repository find one with correct value', async () => {
+      const findSpy = jest.spyOn(planRepository, 'findOne');
+
+      await service.findOne(10);
+
+      expect(findSpy).toHaveBeenCalledWith(10);
+    });
+
+    it('should throw if repository find one throws', async () => {
+      jest.spyOn(planRepository, 'findOne').mockRejectedValueOnce(new Error());
+
+      await expect(service.findOne(10)).rejects.toThrow(new Error());
+    });
+
+    it('should return a plan on success', async () => {
+      jest.spyOn(planRepository, 'findOne').mockResolvedValue(mockPlan);
+
+      const response = await service.findOne(10);
+
+      expect(response).toEqual(mockPlan);
+    });
+  });
 });

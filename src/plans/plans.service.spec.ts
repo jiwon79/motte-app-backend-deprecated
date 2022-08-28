@@ -147,4 +147,22 @@ describe('Plans Service', () => {
       );
     });
   });
+
+  describe('delete()', () => {
+    it('should call repository delete with correct value', async () => {
+      const deleteSpy = jest.spyOn(planRepository, 'softDelete');
+
+      await service.remove(10);
+
+      expect(deleteSpy).toBeCalledWith(10);
+    });
+
+    it('should throw if repository delete throws', async () => {
+      jest
+        .spyOn(planRepository, 'softDelete')
+        .mockRejectedValueOnce(new Error());
+
+      await expect(service.remove(10)).rejects.toThrow(new Error());
+    });
+  });
 });

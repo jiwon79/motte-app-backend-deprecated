@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PlansService } from './plans.service';
-import { Plan } from './plan.entity';
-import { UpdatePlanDto } from './dto/update-plan.dto';
-import { CreatePlanDto } from './dto/create-plan.dto';
+import { PlansService } from 'src/plans/plans.service';
+import { Plan } from 'src/plans/plan.entity';
+import { UpdatePlanDto } from 'src/plans/dto/update-plan.dto';
+import { CreatePlanDto } from 'src/plans/dto/create-plan.dto';
 
 const mockPlanRepository = () => ({
   save: jest.fn(),

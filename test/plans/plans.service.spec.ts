@@ -3,8 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PlansService } from 'src/plans/plans.service';
 import { Plan } from 'src/plans/plan.entity';
-import { UpdatePlanDto } from 'src/plans/dto/update-plan.dto';
-import { CreatePlanDto } from 'src/plans/dto/create-plan.dto';
+import { mockPlan, mockCreateDto, mockUpdateDto } from './mockPlan';
 
 const mockPlanRepository = () => ({
   save: jest.fn(),
@@ -14,27 +13,6 @@ const mockPlanRepository = () => ({
   update: jest.fn(),
   softDelete: jest.fn(),
 });
-
-const mockCreateDto: CreatePlanDto = {
-  date: '2022-01-01',
-  title: 'title',
-  tag: '[]',
-};
-
-const mockUpdateDto: UpdatePlanDto = {
-  date: '2022-01-02',
-  title: 'new title',
-};
-
-const mockPlan = {
-  id: 1,
-  date: '2022-01-01',
-  title: 'title',
-  tag: '[]',
-  // location: '',
-  // channel: '',
-  // content: '',
-};
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 

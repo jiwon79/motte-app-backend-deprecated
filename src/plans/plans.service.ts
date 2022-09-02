@@ -1,36 +1,30 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { Plan } from './plan.entity';
 import { CreatePlanDto } from './dto/create-plan.dto';
 import { UpdatePlanDto } from './dto/update-plan.dto';
+import { PlansRepository } from 'src/plans/plans.repository';
 
 @Injectable()
 export class PlansService {
-  constructor(
-    @InjectRepository(Plan) private planRepository: Repository<Plan>,
-  ) {
-    this.planRepository = planRepository;
-  }
+  constructor(private readonly plansRepository: PlansRepository) {}
 
   async findAll(): Promise<Plan[]> {
-    return await this.planRepository.find();
+    return this.plansRepository.findAll();
   }
 
   async findOne(id: number): Promise<Plan> {
-    return await this.planRepository.findOne(id);
+    return this.plansRepository.findById(id);
   }
 
   async create(planData: CreatePlanDto): Promise<Plan> {
-    const newPlan = this.planRepository.create(planData);
-    return await this.planRepository.save(newPlan);
+    return this.plansRepository.create(planData);
   }
 
   async update(id: number, planData: UpdatePlanDto): Promise<void> {
-    await this.planRepository.update(id, planData);
+    return this.plansRepository.update(id, planData);
   }
 
   async remove(id: number): Promise<void> {
-    await this.planRepository.softDelete(id);
+    return this.plansRepository.delete(id);
   }
 }

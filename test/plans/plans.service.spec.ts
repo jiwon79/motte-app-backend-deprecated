@@ -1,56 +1,51 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { PlansRepository } from 'src/plans/plans.repository';
 import { PlansService } from 'src/plans/plans.service';
-import { Plan } from 'src/plans/plan.entity';
 import { mockPlan, mockCreateDto, mockUpdateDto } from './mockPlan';
 
-const mockPlanRepository = () => ({
-  save: jest.fn(),
+const mockPlanRepository = {
   create: jest.fn(),
-  find: jest.fn(),
-  findOne: jest.fn(),
+  findAll: jest.fn(),
+  findById: jest.fn(),
   update: jest.fn(),
-  softDelete: jest.fn(),
-});
-
-type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
+  delete: jest.fn(),
+};
 
 describe('Plans Service', () => {
   let service: PlansService;
-  let planRepository: MockRepository<Plan>;
+  let plansRepository: PlansRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PlansService,
         {
-          provide: getRepositoryToken(Plan),
-          useValue: mockPlanRepository(),
+          provide: PlansRepository,
+          useValue: mockPlanRepository,
         },
       ],
     }).compile();
 
     service = module.get<PlansService>(PlansService);
-    planRepository = module.get<MockRepository<Plan>>(getRepositoryToken(Plan));
+    plansRepository = module.get<PlansRepository>(PlansRepository);
   });
 
   describe('create()', () => {
-    it('should call repository creat with correct value', async () => {
-      const createSpy = jest.spyOn(planRepository, 'create');
+    it('should correct param - repository create method', async () => {
+      const createSpy = jest.spyOn(plansRepository, 'create');
       await service.create(mockCreateDto);
 
       expect(createSpy).toHaveBeenCalledWith(mockCreateDto);
     });
 
-    it('should throw if repository create throws', async () => {
-      jest.spyOn(planRepository, 'save').mockRejectedValueOnce(new Error());
+    it('should throw - repository create method throws', async () => {
+      jest.spyOn(plansRepository, 'create').mockRejectedValueOnce(new Error());
 
       await expect(service.create(mockCreateDto)).rejects.toThrow(new Error());
     });
 
     it('should create Plans', async () => {
-      jest.spyOn(planRepository, 'save').mockResolvedValue(mockPlan);
+      jest.spyOn(plansRepository, 'create').mockResolvedValue(mockPlan);
       const result = await service.create(mockCreateDto);
 
       expect(result.title).toEqual('title');
@@ -60,16 +55,16 @@ describe('Plans Service', () => {
   });
 
   describe('findAll()', () => {
-    it('should call repository find all', async () => {
-      const findSpy = jest.spyOn(planRepository, 'find');
+    it('should call repository findAll', async () => {
+      const findAllSpy = jest.spyOn(plansRepository, 'findAll');
 
       await service.findAll();
 
-      expect(findSpy).toHaveBeenCalled();
+      expect(findAllSpy).toHaveBeenCalled();
     });
 
-    it('should throw if repository find all trows', async () => {
-      jest.spyOn(planRepository, 'find').mockRejectedValueOnce(new Error());
+    it('should throw - repository findAll method throws', async () => {
+      jest.spyOn(plansRepository, 'findAll').mockRejectedValueOnce(new Error());
 
       await expect(service.findAll()).rejects.toThrow(new Error());
     });
@@ -77,30 +72,32 @@ describe('Plans Service', () => {
     it('should return plans on success', async () => {
       const mockResponse = [mockPlan];
 
-      jest.spyOn(planRepository, 'find').mockResolvedValue(mockResponse);
+      jest.spyOn(plansRepository, 'findAll').mockResolvedValue(mockResponse);
       const response = await service.findAll();
 
       expect(response).toEqual(mockResponse);
     });
   });
 
-  describe('findOne()', () => {
-    it('should call repository find one with correct value', async () => {
-      const findSpy = jest.spyOn(planRepository, 'findOne');
+  describe('findById()', () => {
+    it('should correct param - repository findById method called', async () => {
+      const findSpy = jest.spyOn(plansRepository, 'findById');
 
       await service.findOne(10);
 
       expect(findSpy).toHaveBeenCalledWith(10);
     });
 
-    it('should throw if repository find one throws', async () => {
-      jest.spyOn(planRepository, 'findOne').mockRejectedValueOnce(new Error());
+    it('should throw - repository findById method throws', async () => {
+      jest
+        .spyOn(plansRepository, 'findById')
+        .mockRejectedValueOnce(new Error());
 
       await expect(service.findOne(10)).rejects.toThrow(new Error());
     });
 
     it('should return a plan on success', async () => {
-      jest.spyOn(planRepository, 'findOne').mockResolvedValue(mockPlan);
+      jest.spyOn(plansRepository, 'findById').mockResolvedValue(mockPlan);
 
       const response = await service.findOne(10);
 
@@ -109,16 +106,16 @@ describe('Plans Service', () => {
   });
 
   describe('update()', () => {
-    it('should call repository update with correct value', async () => {
-      const updateSpy = jest.spyOn(planRepository, 'update');
+    it('should correct param - repository update method called', async () => {
+      const updateSpy = jest.spyOn(plansRepository, 'update');
 
       await service.update(10, mockUpdateDto);
 
       expect(updateSpy).toBeCalledWith(10, mockUpdateDto);
     });
 
-    it('should throw if repository throws', async () => {
-      jest.spyOn(planRepository, 'update').mockRejectedValueOnce(new Error());
+    it('should throw - repository throws method throw error', async () => {
+      jest.spyOn(plansRepository, 'update').mockRejectedValueOnce(new Error());
 
       await expect(service.update(10, mockUpdateDto)).rejects.toThrow(
         new Error(),
@@ -127,18 +124,16 @@ describe('Plans Service', () => {
   });
 
   describe('delete()', () => {
-    it('should call repository delete with correct value', async () => {
-      const deleteSpy = jest.spyOn(planRepository, 'softDelete');
+    it('should correct param - repository delete method called', async () => {
+      const deleteSpy = jest.spyOn(plansRepository, 'delete');
 
       await service.remove(10);
 
       expect(deleteSpy).toBeCalledWith(10);
     });
 
-    it('should throw if repository delete throws', async () => {
-      jest
-        .spyOn(planRepository, 'softDelete')
-        .mockRejectedValueOnce(new Error());
+    it('should throw - repository delete method throw error', async () => {
+      jest.spyOn(plansRepository, 'delete').mockRejectedValueOnce(new Error());
 
       await expect(service.remove(10)).rejects.toThrow(new Error());
     });

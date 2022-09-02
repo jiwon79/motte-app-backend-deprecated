@@ -15,7 +15,7 @@ export class PlansRepository {
     return this.repository.find();
   }
 
-  async findById(id: string): Promise<Plan> {
+  async findById(id: number): Promise<Plan> {
     return await this.repository.findOne(id);
   }
 
@@ -26,11 +26,11 @@ export class PlansRepository {
     return plan;
   }
 
-  async update(id: string, updatePlanDto: UpdatePlanDto): Promise<void> {
+  async update(id: number, updatePlanDto: UpdatePlanDto): Promise<void> {
     await this.repository.update(id, updatePlanDto);
   }
 
-  async delete(id: string): Promise<void> {
-    await this.repository.delete(id);
+  async delete(id: number): Promise<void> {
+    await this.repository.softDelete(id);
   }
 }

@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Put, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  HttpCode,
+  HttpStatus,
+  Delete,
+} from '@nestjs/common';
 import { PlansService } from './plans.service';
 import { Plan } from './plan.entity';
 import { CreatePlanDto } from './dto/create-plan.dto';
@@ -9,46 +19,35 @@ export class PlansController {
   constructor(private readonly plansService: PlansService) {}
 
   @Get()
+  @HttpCode(200)
   async getAllPlans(): Promise<Plan[]> {
-    const planList = await this.plansService.getAll();
-    return Object.assign({
-      data: planList,
-      statusCode: 200,
-      statusMsg: '성공',
-    });
+    return this.plansService.findAll();
   }
 
   @Get('/:id')
-  async getPlan(@Param('id') id: number) {
-    const plan = await this.plansService.getOne(id);
-    return {
-      data: plan,
-      statusCode: 200,
-      statusMsg: 'get one success',
-    };
+  @HttpCode(200)
+  async getPlan(@Param('id') id: number): Promise<Plan> {
+    return this.plansService.findOne(id);
   }
 
   @Post()
-  async create(@Body() planData: CreatePlanDto): Promise<string[]> {
-    console.log(planData);
-    await this.plansService.create(planData);
-    return Object.assign({
-      data: { ...planData },
-      statusCode: 201,
-      statusMsg: 'create success',
-    });
+  @HttpCode(201)
+  async create(@Body() planData: CreatePlanDto): Promise<Plan> {
+    return this.plansService.create(planData);
   }
 
   @Put('/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   async update(
     @Body() planData: UpdatePlanDto,
     @Param() id: number,
-  ): Promise<string[]> {
-    await this.plansService.update(id, planData);
-    return Object.assign({
-      data: { ...planData },
-      statusCode: 200,
-      statusMsg: 'update success',
-    });
+  ): Promise<void> {
+    return this.plansService.update(id, planData);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async delete(@Param() id: number): Promise<void> {
+    return this.plansService.delete(id);
   }
 }

@@ -127,7 +127,7 @@ describe('Plans Service', () => {
     it('should correct param - repository delete method called', async () => {
       const deleteSpy = jest.spyOn(plansRepository, 'delete');
 
-      await service.remove(10);
+      await service.delete(10);
 
       expect(deleteSpy).toBeCalledWith(10);
     });
@@ -135,7 +135,7 @@ describe('Plans Service', () => {
     it('should throw - repository delete method throw error', async () => {
       jest.spyOn(plansRepository, 'delete').mockRejectedValueOnce(new Error());
 
-      await expect(service.remove(10)).rejects.toThrow(new Error());
+      await expect(service.delete(10)).rejects.toThrow(new Error());
     });
   });
 });

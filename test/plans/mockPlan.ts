@@ -2,6 +2,7 @@ import { CreatePlanDto } from 'src/plans/dto/create-plan.dto';
 import { UpdatePlanDto } from 'src/plans/dto/update-plan.dto';
 import { Plan } from 'src/plans/plan.entity';
 
+/// mockPlan 을 만드는 dto
 export const mockCreateDto: CreatePlanDto = {
   date: '2022-01-01',
   title: 'title',
@@ -22,6 +23,7 @@ export const mockUpdateDto: UpdatePlanDto = {
   title: 'new title',
 };
 
+/// mockCreateDto 로부터 만들어진 Plan entity
 export const mockPlan: Plan = {
   id: 1,
   date: '2022-01-01',

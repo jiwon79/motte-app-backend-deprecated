@@ -20,13 +20,13 @@ export class PlansController {
 
   @Get()
   @HttpCode(200)
-  async getAllPlans(): Promise<Plan[]> {
+  async findAll(): Promise<Plan[]> {
     return this.plansService.findAll();
   }
 
   @Get('/:id')
   @HttpCode(200)
-  async getPlan(@Param('id') id: number): Promise<Plan> {
+  async findOne(@Param('id') id: number): Promise<Plan> {
     return this.plansService.findOne(id);
   }
 
@@ -39,8 +39,8 @@ export class PlansController {
   @Put('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async update(
-    @Body() planData: UpdatePlanDto,
     @Param() id: number,
+    @Body() planData: UpdatePlanDto,
   ): Promise<void> {
     return this.plansService.update(id, planData);
   }

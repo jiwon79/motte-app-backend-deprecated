@@ -24,7 +24,7 @@ export class PlansService {
     return this.plansRepository.update(id, planData);
   }
 
-  async remove(id: number): Promise<void> {
+  async delete(id: number): Promise<void> {
     return this.plansRepository.delete(id);
   }
 }

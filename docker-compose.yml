@@ -10,3 +10,5 @@ services:
       - POSTGRES_DB=github-actions-motte-app
     ports:
       - "5432:5432"
+#    command:
+#      - ssl=on

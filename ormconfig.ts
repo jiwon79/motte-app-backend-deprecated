@@ -1,7 +1,7 @@
 import { ConnectionOptions } from 'typeorm';
 
 const typeormConfig: ConnectionOptions =
-  process.env.ENVIROMENT === 'develop'
+  process.env.NODE_ENV === 'dev'
     ? {
         type: 'postgres',
         database: 'github-actions-motte-app',
@@ -16,7 +16,6 @@ const typeormConfig: ConnectionOptions =
           entitiesDir: __dirname + '/**/*.entity.{ts,js}',
           migrationsDir: 'src/migrations',
         },
-        ssl: false,
       }
     : {
         url: process.env.DATABASE_URL,

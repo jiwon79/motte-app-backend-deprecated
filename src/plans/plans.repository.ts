@@ -16,7 +16,7 @@ export class PlansRepository {
   }
 
   async findById(id: number): Promise<Plan> {
-    return await this.repository.findOne(id);
+    return await this.repository.findOne({ where: { id } });
   }
 
   async create(createPlanDto: CreatePlanDto): Promise<Plan> {

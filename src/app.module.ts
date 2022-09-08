@@ -7,6 +7,8 @@ import { UsersModule } from './users/users.module';
 import { PlansModule } from './plans/plans.module';
 import typeormConfig from '../ormconfig';
 
+console.log(typeormConfig);
+
 @Module({
   imports: [TypeOrmModule.forRoot(typeormConfig), UsersModule, PlansModule],
   controllers: [AppController],

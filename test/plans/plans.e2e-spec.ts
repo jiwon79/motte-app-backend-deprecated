@@ -41,7 +41,7 @@ describe('Plans', () => {
 
     await repository.save(plan);
     const response = await request(app.getHttpServer()).get('/plans');
-    console.log(response.body);
+
     expect(response.status).toBe(200);
     expect(response.body).toHaveLength(1);
     expect(response.body[0].date).toBe('2022-02-02');

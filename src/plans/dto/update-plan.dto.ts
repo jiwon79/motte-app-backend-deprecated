@@ -1,17 +1,17 @@
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
-export class CreatePlanDto {
-  @IsNotEmpty()
+export class UpdatePlanDto {
+  @IsOptional()
   @IsString()
-  readonly date: string;
+  readonly date?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  readonly title: string;
+  readonly title?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  readonly tag: string;
+  readonly tag?: string;
 
   @IsOptional()
   @IsString()

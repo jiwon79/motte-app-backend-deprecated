@@ -15,11 +15,11 @@ export class Plan {
   tag: string;
 
   @Column({ nullable: true })
-  location: string;
+  location?: string;
 
   @Column({ nullable: true })
-  channel: string;
+  channel?: string;
 
   @Column({ nullable: true })
-  content: string;
+  content?: string;
 }

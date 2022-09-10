@@ -6,11 +6,11 @@ import { DataSourceOptions } from 'typeorm';
 
 export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   useFactory: async (): Promise<TypeOrmModuleOptions> => {
-    return typeormConfig;
+    return typeOrmConfig;
   },
 };
 
-export const typeormConfig: DataSourceOptions =
+export const typeOrmConfig: DataSourceOptions =
   process.env.NODE_ENV === 'dev'
     ? {
         type: 'postgres',

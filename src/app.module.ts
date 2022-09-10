@@ -5,9 +5,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { PlansModule } from './plans/plans.module';
-import { typeOrmAsyncConfig } from '../ormconfig';
+import { typeOrmAsyncConfig, typeOrmConfig } from '../ormconfig';
 
-console.log(typeOrmAsyncConfig);
+console.log(typeOrmConfig);
 
 @Module({
   imports: [

@@ -5,12 +5,16 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { PlansModule } from './plans/plans.module';
-import typeormConfig from '../ormconfig';
+import { typeOrmAsyncConfig } from '../ormconfig';
 
-console.log(typeormConfig);
+console.log(typeOrmAsyncConfig);
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeormConfig), UsersModule, PlansModule],
+  imports: [
+    TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
+    UsersModule,
+    PlansModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

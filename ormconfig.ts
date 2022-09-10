@@ -1,6 +1,16 @@
+import {
+  TypeOrmModuleAsyncOptions,
+  TypeOrmModuleOptions,
+} from '@nestjs/typeorm';
 import { DataSourceOptions } from 'typeorm';
 
-const typeormConfig: DataSourceOptions =
+export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
+  useFactory: async (): Promise<TypeOrmModuleOptions> => {
+    return typeormConfig;
+  },
+};
+
+export const typeormConfig: DataSourceOptions =
   process.env.NODE_ENV === 'dev'
     ? {
         type: 'postgres',
@@ -32,5 +42,3 @@ const typeormConfig: DataSourceOptions =
         //   migrationsDir: 'src/migrations/',
         // },
       };
-
-export = typeormConfig;

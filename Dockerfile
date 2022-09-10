@@ -10,5 +10,4 @@ WORKDIR /app
 ENV NODE_ENV prod
 COPY --from=builder /app .
 EXPOSE 8080
-CMD ["npm", "run", "typeorm", "--", "migration:run"]
-CMD ["npm", "run", "start:prod"]
+CMD npm run start:prod

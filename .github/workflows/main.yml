@@ -29,6 +29,6 @@ jobs:
       - name: Deploy
         run: |
           railway up
-          npm run typeorm -- migration:run
+          railway run npm run typeorm -- migration:run
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}

@@ -1,7 +1,9 @@
-name: Deploy to Railway
+name: Run test and Deploy to Railway
 
 on:
   push:
+    branches: [main, dev]
+  pull_request:
     branches: [main]
 
 jobs:
@@ -25,10 +27,9 @@ jobs:
         
       - name: Run e2e test
         run: |
-          docker-compose up
+          docker-compose up -d
           npm run typeorm -- migration:run
           npm run test:e2e
-          docker-compose stop
           docker-compose down
 
       - name: Install Railway

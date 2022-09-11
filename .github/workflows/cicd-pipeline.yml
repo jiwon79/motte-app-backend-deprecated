@@ -25,12 +25,12 @@ jobs:
       - name: Run unit tests
         run: npm run test:unit
         
-      - name: Run e2e test
-        run: |
-          docker-compose up -d
-          npm run typeorm -- migration:run
-          npm run test:e2e
-          docker-compose down
+#       - name: Run e2e test
+#         run: |
+#           docker-compose up -d
+#           npm run typeorm -- migration:run
+#           npm run test:e2e
+#           docker-compose down
 
       - name: Install Railway
         run: npm i -g @railway/cli

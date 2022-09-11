@@ -20,8 +20,14 @@ jobs:
       - name: Install packages
         run: npm install
 
-      - name: Run tests
-        run: npm test
+      - name: Run unit tests
+        run: npm run test:unit
+        
+      - name: Run e2e test
+        run: |
+          docker-compose up
+          npm run test:e2e
+          docker-compose down
 
       - name: Install Railway
         run: npm i -g @railway/cli

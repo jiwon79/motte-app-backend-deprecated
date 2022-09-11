@@ -25,9 +25,10 @@ jobs:
         
       - name: Run e2e test
         run: |
-          docker-compose up -d
+          docker-compose up
           npm run typeorm -- migration:run
           npm run test:e2e
+          docker-compose stop
           docker-compose down
 
       - name: Install Railway

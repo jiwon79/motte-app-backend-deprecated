@@ -37,7 +37,7 @@ jobs:
 
       - name: Deploy
         run: |
-          sudo kill -9 $(sudo lsof -t -i:5432)
+          sudo fuser -n tcp -k 5432
           railway up
           railway run npm run typeorm -- migration:run
         env:

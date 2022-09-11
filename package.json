@@ -73,9 +73,12 @@
       "<rootDir>"
     ],
     "testRegex": "(/tests/.*|(\\.|/)(test|spec|e2e-spec))\\.[jt]sx?$",
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/dist/"
+    "modulePathIgnorePatterns": [
+      "<rootDir>/dist/"
+    ],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/src/migrations/"
     ],
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
